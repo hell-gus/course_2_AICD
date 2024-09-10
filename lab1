@@ -1,6 +1,6 @@
- # первая лаба по аисду, тут чисто то что проходит тесты(считать оптимальное колво узлов и прописать основную часть анроллед лист)
-
 import math
+from types import new_class
+
 
 class Node:
     def __init__(self):
@@ -38,6 +38,66 @@ class UnrolledLinkedList:
         for i in range(self.nodes_count):
             print(f"Node {i}: {' '.join(map(str, temp_next.data))}")
             temp_next = temp_next.next
+
+    def __len__(self):
+        return self.data_len
+
+    def find_by_index(self, index):
+        if self.__len__() <= index < 0:
+            return None
+        elements_count = 0
+        temp_next = self.head
+        for i in range(self.nodes_count):
+            if elements_count <= index <= (elements_count + temp_next.data -1):
+                return temp_next.data[index - elements_count]
+            elements_count += temp_next.data
+            temp_next = temp_next.next
+
+    def delete_by_index(self, index):
+        if self.__len__() <= index < 0:
+            return None
+        elements_count = 0
+        temp_next = self.head
+        for i in range(self.nodes_count):
+            if elements_count <= index <= (elements_count + temp_next.data -1):
+                del temp_next.data[index - elements_count]
+                temp_next.data -= 1
+                self.data_len -= 1
+                if self.__len__() == 0:
+                    self.head = None
+                    self.nodes_count = 0
+                return True
+            elements_count += temp_next.data
+            temp_next = temp_next.next
+
+    def append(self, element):
+        if self.nodes_count == 0:
+            self.head.data.append(element)
+            self.head.size_of_node += 1
+            self.data_len += 1
+            self.nodes_count += 1
+            return
+        temp_next = self.head
+        for i in range(self.nodes_count):
+            if temp_next.size_of_node < self.size_of_node:
+                temp_next.data.append(element)
+                temp_next.size_of_node += 1
+                self.data_len += 1
+                return
+            if i != self.nodes_count -1:
+                temp_next = temp_next.next
+        new_node = Node()
+        temp_next.next = new_node
+        current_node_data = temp_next.data
+        left_data = current_node_data[:math.ceil(self.size_of_node / 2)]
+        right_data = current_node_data[math.ceil(self.size_of_node / 2):]
+        right_data.append(element)
+        temp_next.data = left_data
+        new_node.data = right_data
+        temp_next.size_of_node = len(temp_next.data)
+        new_node.size_of_node = len(new_node.data)
+        self.nodes_count += 1
+
 
 n = list(map(int,input().split()))
 test = UnrolledLinkedList(n, calculate_optimal_node_size(len(n)))
