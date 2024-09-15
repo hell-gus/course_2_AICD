@@ -22,8 +22,9 @@ def test_of_append():
     unroll_linked_list.append(1)
     assert len(unroll_linked_list) == 1, "После вставки нового эдемента должна увеличиться длина"
 
-def test_of_insert():
-    pass
-
 def test_of_balace():
-    pass
+    unroll_linked_list = UnrolledLinkedList([x for x in range(17)], 3)
+    prev_amount_elements = unroll_linked_list
+    unroll_linked_list.delete_by_index(1)
+    unroll_linked_list.balance()
+    assert prev_amount_elements != unroll_linked_list.nodes_count

@@ -16,12 +16,6 @@ def check(arr_1, arr_2, n_array = None):
     unrolled_linked_list.balance()
     unrolled_linked_list.print_list()
 
-#n = list(map(int,input().split()))
-#check(n, [1, 2, 3, 4])
 unroll_linked_list = UnrolledLinkedList([1, 2, 3, 4], size_of_node = 4)
-#print(len(unroll_linked_list))
+unroll_linked_list.insert(2, "33")
 unroll_linked_list.print_list()
-unroll_linked_list.delete_by_index(1)
-#print(len(unroll_linked_list))
-unroll_linked_list.print_list()
-print(unroll_linked_list.find_by_index(1))
